@@ -16,11 +16,31 @@ console.log(dataPromise);
 // get data
 d3.json(url).then(function (data) {
     console.log(data)
+    var samples_dict = data.samples
+    console.log(samples_dict)
+    var id_940_sample = samples_dict[0].sample_values
+    console.log(id_940_sample)
+    var id_940_otu = samples_dict[0].otu_ids
+    console.log(id_940_otu)
+    var id_940_labels = samples_dict[0].otu_labels
+    console.log(id_940_labels)
+
+    var test_bar = [{
+        type: 'bar',
+        x: id_940_sample,
+        y: id_940_otu,
+        test: id_940_labels,
+        orientation: 'h'
+    }]
+
+    Plotly.newPlot("bar", test_bar)
 });
 
-// variables for sample_values
-let sample_values = Object.values(data.samples)
-console.log(sample_values)
+// TEST TEST TEST
+
+
+
+
 
 
 
@@ -30,18 +50,19 @@ console.log(sample_values)
 //      - y: otu_ids
 //      - hover: otu_labels
 
+
 // basic structure
 // not sure if text is correct for hover info
-var bar_data = [{
-    type: 'bar',
-    x: [20, 14, 23],
-    y: ['giraffes', 'orangutans', 'monkeys'],
-    text: ['label1', 'label2', 'label3'],
-    orientation: 'h'
-}];
+// var bar_data = [{
+//     type: 'bar',
+//     x: [20, 14, 23],
+//     y: ['giraffes', 'orangutans', 'monkeys'],
+//     text: ['label1', 'label2', 'label3'],
+//     orientation: 'h'
+// }];
 
 
-Plotly.newPlot("bar", bar_data)
+// Plotly.newPlot("bar", bar_data)
 
 // 3) bubble chart
 //      - x: otu_ids
