@@ -16,33 +16,73 @@ console.log(dataPromise);
 // get data
 d3.json(url).then(function (data) {
     console.log(data)
+    // samples dict
     var samples_dict = data.samples
     console.log(samples_dict)
-    var id_940_sample = samples_dict[0].sample_values
-    console.log(id_940_sample)
-    var id_940_otu = samples_dict[0].otu_ids
-    console.log(id_940_otu)
-    var id_940_labels = samples_dict[0].otu_labels
-    console.log(id_940_labels)
+    // metadata dict 
+    var meta_dict = data.metadata
+    console.log(meta_dict)
+
+    // metadata 
+    var dem_dict = meta_dict[0]
+    console.log(dem_dict)
+
+    var test_table = [{
+        type: 'table',
+        cells: {
+            values: dem_dict
+        }
+    }]
+    Plotly.newPlot('sample-metadata', test_table);
+
+    //sample_values
+    var sample_values_bar = samples_dict[0].sample_values.slice(0,10).reverse()
+    console.log(sample_values_bar)
+    //otu_ids
+    var ids_bar = samples_dict[0].otu_ids.slice(0,10).map(id => `OTU ${id}`).reverse()
+    console.log(ids_bar)
+    //otu_labels
+    var labels_bar = samples_dict[0].otu_labels.slice(0,10).reverse()
+    console.log(labels_bar)
+
+    // process to combine and sort for bar chart
+    //  - create empty dict
+    //  - for loop through 
 
     var test_bar = [{
         type: 'bar',
-        x: id_940_sample,
-        y: id_940_otu,
-        test: id_940_labels,
+        x: sample_values_bar,
+        y: ids_bar,
+        text: labels_bar,
         orientation: 'h'
     }]
 
-    Plotly.newPlot("bar", test_bar)
+    var layout_bar = {
+        title: "bar chart"
+        }
+
+    Plotly.newPlot("bar", test_bar, layout_bar);
+
+
+    // variables for bubble chart
+    //sample_values
+    var sample_values_bubble = samples_dict[0].sample_values
+    console.log(sample_values_bubble)
+    //otu_ids
+    var ids_bubble = samples_dict[0].otu_ids
+    console.log(ids_bubble)
+    //otu_labels
+    var labels_bubble = samples_dict[0].otu_labels
+    console.log(labels_bubble)
 
     var test_bubble = {
-        x: id_940_otu,
-        y: id_940_sample,
-        text: id_940_labels,
+        x: ids_bubble,
+        y: sample_values_bubble,
+        text: labels_bubble,
         mode: 'markers',
         marker: {
-          color: id_940_otu,
-          size: id_940_sample
+          color: ids_bubble,
+          size: sample_values_bubble
         }
       };
       
