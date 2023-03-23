@@ -1,12 +1,3 @@
-// PSEUDO CODE
-//
-//
-//
-
-// 1) read in json 
-//      - url
-//      - promise
-//      - then(function)
 const url = "https://2u-data-curriculum-team.s3.amazonaws.com/dataviz-classroom/v1.1/14-Interactive-Web-Visualizations/02-Homework/samples.json";
 
 // promise
@@ -23,17 +14,17 @@ d3.json(url).then(function (data) {
     var meta_dict = data.metadata
     console.log(meta_dict)
 
-    // metadata 
-    var dem_dict = meta_dict[0]
-    console.log(dem_dict)
 
-    var test_table = [{
-        type: 'table',
-        cells: {
-            values: dem_dict
-        }
-    }]
-    Plotly.newPlot('sample-metadata', test_table);
+   //select sample metadata element and append list of metadata
+    let meta_ul = d3.select("#sample-metadata").append("ul");
+    meta_ul.append("li").text(`Id: ${meta_dict[0].id}`);
+    meta_ul.append("li").text(`Ethnicity: ${meta_dict[0].ethnicity}`);
+    meta_ul.append("li").text(`Gender: ${meta_dict[0].gender}`);
+    meta_ul.append("li").text(`Age: ${meta_dict[0].age}`);
+    meta_ul.append("li").text(`Location: ${meta_dict[0].location}`);
+    meta_ul.append("li").text(`BBType: ${meta_dict[0].bbtype}`);
+    meta_ul.append("li").text(`WFreq: ${meta_dict[0].wfreq}`);
+    
 
     //sample_values
     var sample_values_bar = samples_dict[0].sample_values.slice(0,10).reverse()
@@ -98,65 +89,7 @@ d3.json(url).then(function (data) {
       Plotly.newPlot("bubble", data, layout);
 });
 
-// TEST TEST TEST
 
-
-
-
-
-
-
-// 2) bar chart
-//      - horizontal
-//      - x: sample_values
-//      - y: otu_ids
-//      - hover: otu_labels
-
-
-// basic structure
-// not sure if text is correct for hover info
-// var bar_data = [{
-//     type: 'bar',
-//     x: [20, 14, 23],
-//     y: ['giraffes', 'orangutans', 'monkeys'],
-//     text: ['label1', 'label2', 'label3'],
-//     orientation: 'h'
-// }];
-
-
-// Plotly.newPlot("bar", bar_data)
-
-// 3) bubble chart
-//      - x: otu_ids
-//      - y: sample_values
-//      - marker size: sample_values
-//      - marker colors: otu_ids
-//      - text values: otu_labels
-
-// var trace1 = {
-//     x: [1, 2, 3, 4],
-//     y: [10, 11, 12, 13],
-//     text: ['A<br>size: 40', 'B<br>size: 60', 'C<br>size: 80', 'D<br>size: 100'],
-//     mode: 'markers',
-//     marker: {
-//       color: ['rgb(93, 164, 214)', 'rgb(255, 144, 14)',  'rgb(44, 160, 101)', 'rgb(255, 65, 54)'],
-//       size: [40, 60, 80, 100]
-//     }
-//   };
-  
-//   var data = [trace1];
-  
-//   var layout = {
-//     title: 'Bubble Chart Hover Text',
-//     showlegend: false,
-//     height: 600,
-//     width: 600
-//   };
-  
-//   Plotly.newPlot("bubble", data, layout);
-  
-// 4) demographic table
-//      - metadata object w/in json
 
 // 5) drop down 
 //      - init function
