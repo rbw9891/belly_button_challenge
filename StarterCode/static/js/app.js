@@ -36,9 +36,14 @@ d3.json(url).then(function (data) {
     var labels_bar = samples_dict[0].otu_labels.slice(0,10).reverse()
     console.log(labels_bar)
 
-    // process to combine and sort for bar chart
-    //  - create empty dict
-    //  - for loop through 
+    // let bar_x = []
+    // let bar_y = []
+    // let bar_label = []
+    // let bubble_x = []
+    // let bubble_y = []
+    // let bubble_label = []
+
+    // if (dropDown === )
 
     var test_bar = [{
         type: 'bar',
