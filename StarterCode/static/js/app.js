@@ -1,21 +1,25 @@
 const url = "https://2u-data-curriculum-team.s3.amazonaws.com/dataviz-classroom/v1.1/14-Interactive-Web-Visualizations/02-Homework/samples.json";
 
-// promise
-const dataPromise = d3.json(url);
-console.log(dataPromise);
-
 // get data
 d3.json(url).then(function (data) {
-    console.log(data)
+    
+    // -------- variables for 3 dictionaries of json object------------
     // samples dict
     var samples_dict = data.samples
     console.log(samples_dict)
     // metadata dict 
     var meta_dict = data.metadata
     console.log(meta_dict)
+    // names dict
+    var names_dict = data.names
+    console.log(names_dict)
 
+    // ------- dropdown menu --------------
+    var dropDown = d3.select("#selDataset");
+    names_dict.forEach(name => dropDown.append("option").text(name).property("value"));
 
-   //select sample metadata element and append list of metadata
+    // ------- demographic panel -------------
+    //select sample metadata element and append list of metadata
     let meta_ul = d3.select("#sample-metadata").append("ul");
     meta_ul.append("li").text(`Id: ${meta_dict[0].id}`);
     meta_ul.append("li").text(`Ethnicity: ${meta_dict[0].ethnicity}`);
@@ -25,7 +29,7 @@ d3.json(url).then(function (data) {
     meta_ul.append("li").text(`BBType: ${meta_dict[0].bbtype}`);
     meta_ul.append("li").text(`WFreq: ${meta_dict[0].wfreq}`);
     
-
+    // -------- bar chart array variables----------
     //sample_values
     var sample_values_bar = samples_dict[0].sample_values.slice(0,10).reverse()
     console.log(sample_values_bar)
@@ -36,15 +40,7 @@ d3.json(url).then(function (data) {
     var labels_bar = samples_dict[0].otu_labels.slice(0,10).reverse()
     console.log(labels_bar)
 
-    // let bar_x = []
-    // let bar_y = []
-    // let bar_label = []
-    // let bubble_x = []
-    // let bubble_y = []
-    // let bubble_label = []
-
-    // if (dropDown === )
-
+    // -------- plot bar chart -----------
     var test_bar = [{
         type: 'bar',
         x: sample_values_bar,
@@ -60,7 +56,7 @@ d3.json(url).then(function (data) {
     Plotly.newPlot("bar", test_bar, layout_bar);
 
 
-    // variables for bubble chart
+    // -------- bubble chart array variables----------
     //sample_values
     var sample_values_bubble = samples_dict[0].sample_values
     console.log(sample_values_bubble)
@@ -71,6 +67,7 @@ d3.json(url).then(function (data) {
     var labels_bubble = samples_dict[0].otu_labels
     console.log(labels_bubble)
 
+    // -------- plot bubble chart -----------
     var test_bubble = {
         x: ids_bubble,
         y: sample_values_bubble,
@@ -96,10 +93,3 @@ d3.json(url).then(function (data) {
 
 
 
-// 5) drop down 
-//      - init function
-//      - wrap all charts in function
-
-// Other Thoughts
-//      - html template all ready for me
-//      - 
