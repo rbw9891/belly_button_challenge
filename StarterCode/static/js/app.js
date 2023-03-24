@@ -1,16 +1,27 @@
 const url = "https://2u-data-curriculum-team.s3.amazonaws.com/dataviz-classroom/v1.1/14-Interactive-Web-Visualizations/02-Homework/samples.json";
 
+
+// TO DO NEXT
+//  - variable for dropdown click value (maybe function passed as parameter?)
+//  - function for bubble chart
+//  - function for dem chart 
+
+
 function makeBarChart(id, samples_dict) {
 
-  
 // -------- bar chart array variables----------
 // take the subject id that was clicked in dropdown
 // use that subject id to update the sample, id, label variables
 //  - big list of samples and we want to find sample in list where subject id matches
 //  - once we have that we we take that index in the list
 // make new chart
-
-  var sampleFilter = samples_dict.filter(sample => {sample.id == id})
+  // var samples_dict = data.samples
+  // console.log(samples_dict)
+  console.log(samples_dict)
+  console.log(typeof id)
+  console.log(id)
+  var sampleFilter = samples_dict.filter(sample => {return sample.id == id})
+  
   console.log(sampleFilter)
   //sample_values
   var sample_values_bar = sampleFilter[0].sample_values.slice(0,10).reverse()
