@@ -1,10 +1,12 @@
 const url = "https://2u-data-curriculum-team.s3.amazonaws.com/dataviz-classroom/v1.1/14-Interactive-Web-Visualizations/02-Homework/samples.json";
 
 
-// TO DO NEXT
-//  - variable for dropdown click value (maybe function passed as parameter?)
-//  - function for bubble chart
-//  - function for dem chart 
+// Layout
+//    - chart function
+//    - dem function
+//    - update function
+//    - init function
+//    - callback w/ global data and init
 
 
 function makeBarChart(id, data) {
@@ -113,6 +115,7 @@ function updateTest() {
 
 d3.select("#selDataset").on("change", updateTest);
 
+
 // get data
 d3.json(url).then(function (data) {
     
@@ -121,7 +124,8 @@ d3.json(url).then(function (data) {
     var samples_dict = data.samples
     console.log(samples_dict)
     // metadata dict 
-    
+    var meta_dict = data.metadata
+    console.log(meta_dict)
     
     // names dict
     var names_dict = data.names
@@ -132,19 +136,45 @@ d3.json(url).then(function (data) {
     names_dict.forEach(name => dropDown.append("option").text(name).attr("value", name));
   
 
-    // ------- demographic panel -------------
-    //select sample metadata element and append list of metadata
-   
+    var meta_ul = d3.select("#sample-metadata").append("ul");
+ 
     
-    
-    // var clickAction = d3.select("#selDataset").on("click", () => {
-    //                     let dropDown1 = d3.select("#selDataset")
-    //                     console.log(dropDown1.property("value"))
-    // })
-    // console.log(clickAction)
 
-    // // ------- bar chart function -----------
-    // makeBarChart(clickAction, samples_dict)
+    
+    meta_ul.append("li").text(`Id: ${meta_dict[0].id}`);
+    meta_ul.append("li").text(`Ethnicity: ${meta_dict[0].ethnicity}`);
+    meta_ul.append("li").text(`Gender: ${meta_dict[0].gender}`);
+    meta_ul.append("li").text(`Age: ${meta_dict[0].age}`);
+    meta_ul.append("li").text(`Location: ${meta_dict[0].location}`);
+    meta_ul.append("li").text(`BBType: ${meta_dict[0].bbtype}`);
+    meta_ul.append("li").text(`WFreq: ${meta_dict[0].wfreq}`);
+    
+    
+    
+    //sample_values
+    var sample_values_bar = samples_dict[0].sample_values.slice(0,10).reverse()
+    console.log(sample_values_bar)
+    //otu_ids
+    var ids_bar = samples_dict[0].otu_ids.slice(0,10).map(id => `OTU ${id}`).reverse()
+    console.log(ids_bar)
+    //otu_labels
+    var labels_bar = samples_dict[0].otu_labels.slice(0,10).reverse()
+    console.log(labels_bar)
+
+    // -------- plot bar chart -----------
+    var test_bar = [{
+    type: 'bar',
+    x: sample_values_bar,
+    y: ids_bar,
+    text: labels_bar,
+    orientation: 'h'
+    }]
+
+    var layout_bar = {
+    title: "bar chart"
+    }
+
+    Plotly.newPlot("bar", test_bar, layout_bar);
 
 
     // -------- bubble chart array variables----------
@@ -186,11 +216,4 @@ d3.json(url).then(function (data) {
 
   
 
-    // paying attention to the dropdown
-    //    - know which id user selects
-    //    - by click get text content from option
-    //    - 
-
-
-    // changing the charts based on the value of dropdown
 
