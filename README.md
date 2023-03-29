@@ -16,10 +16,9 @@ rest were relatively rare.
 ### .vscode
     - settings.json
 
-### StarterCode
-    - index.html
-    - samples.json
-    - static
-        > app.js
+### static/js
+    - app.js
+
+### index.html
 
 This README
